@@ -1,5 +1,5 @@
 # Docker Hub Repo Link
-https://hub.docker.com/r/leopaulino/601_module14
+[https://hub.docker.com/r/leopaulino/601_module14](https://hub.docker.com/r/leopaulino/is601_finalproject)
 
 # 📦 Project Setup
 
