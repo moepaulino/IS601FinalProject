@@ -11,7 +11,7 @@ It demonstrates several advanced patterns:
 4. Single Responsibility Principle - Each calculation type does one thing
 
 These models are designed for a calculator application that supports
-basic mathematical operations: addition, subtraction, multiplication, and division.
+basic mathematical operations: addition, subtraction, multiplication, division, and power.
 """
 
 from datetime import datetime
@@ -178,6 +178,7 @@ class AbstractCalculation:
             'subtraction': Subtraction,
             'multiplication': Multiplication,
             'division': Division,
+            'power': Power,
         }
         calculation_class = calculation_classes.get(calculation_type.lower())
         if not calculation_class:
@@ -353,4 +354,36 @@ class Division(Calculation):
             if value == 0:
                 raise ValueError("Cannot divide by zero.")
             result /= value
+        return result
+
+class Power(Calculation):
+    """
+    Power calculation subclass.
+
+    Implements exponentiation.
+    Example:
+        [2, 3] -> 2 ** 3 = 8
+        [2, 3, 2] -> (2 ** 3) ** 2 = 64
+    """
+    __mapper_args__ = {"polymorphic_identity": "power"}
+
+    def get_result(self) -> float:
+        """
+        Calculate exponentiation using Python's ** operator.
+
+        Returns:
+            float: The result of exponentiation.
+
+        Raises:
+            ValueError: If inputs are invalid or fewer than 2 numbers provided.
+        """
+        if not isinstance(self.inputs, list):
+            raise ValueError("Inputs must be a list of numbers.")
+        if len(self.inputs) < 2:
+            raise ValueError("Inputs must have at least two numbers.")
+
+        result = self.inputs[0]
+        for value in self.inputs[1:]:
+            result = result ** value
+
         return result
