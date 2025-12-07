@@ -294,6 +294,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
         result = inputs.reduce((a, b, i) => i === 0 ? a : a / b, inputs[0]);
         break;
+        case 'power':
+          // Use reduce to allow chaining: a^b^c = (a^b)^c
+          result = inputs.reduce((a, b, i) => i === 0 ? a : Math.pow(a, b), inputs[0]);
+          break;
       default:
         return 'Unknown operation';
     }
@@ -329,6 +333,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         break;
       case 'division':
         operator = '÷';
+        break;
+      case 'power':
+        operator = '^';
         break;
       default:
         operator = '?';
