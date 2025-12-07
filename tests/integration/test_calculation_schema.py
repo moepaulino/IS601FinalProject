@@ -20,6 +20,18 @@ def test_calculation_create_valid():
     assert calc.inputs == [10.5, 3.0]
     assert calc.user_id is not None
 
+def test_calculation_create_power_valid():
+    """Test creating a CalculationCreate schema with the new 'power' type."""
+    data = {
+        "type": "power",
+        "inputs": [2, 5],  # 2^5 = 32
+        "user_id": uuid4()
+    }
+    calc = CalculationCreate(**data)
+    assert calc.type == "power"
+    assert calc.inputs == [2, 5]
+    assert calc.user_id is not None
+
 def test_calculation_create_missing_type():
     """Test CalculationCreate fails if 'type' is missing."""
     data = {
