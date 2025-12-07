@@ -2,7 +2,7 @@
 
 import pytest  # Import the pytest framework for writing and running tests
 from typing import Union  # Import Union for type hinting multiple possible types
-from app.operations import add, subtract, multiply, divide  # Import the calculator functions from the operations module
+from app.operations import add, subtract, multiply, divide, power  # Import the calculator functions from the operations module
 
 # Define a type alias for numbers that can be either int or float
 Number = Union[int, float]
@@ -154,6 +154,35 @@ def test_multiply(a: Number, b: Number, expected: Number) -> None:
     # Assert that the result of multiply(a, b) matches the expected value
     assert result == expected, f"Expected multiply({a}, {b}) to be {expected}, but got {result}"
 
+# ---------------------------------------------
+# Unit Tests for the 'power' Function
+# ---------------------------------------------
+
+@pytest.mark.parametrize(
+    "a, b, expected",
+    [
+        (2, 3, 8),            # 2^3
+        (5, 0, 1),            # x^0 = 1
+        (2.5, 2, 6.25),       # float exponent
+        (-2, 3, -8),          # negative base, odd exponent
+        (0, 5, 0),            # 0^positive = 0
+    ],
+    ids=[
+        "power_positive_integers",
+        "power_exponent_zero",
+        "power_float_base",
+        "power_negative_base_odd_exponent",
+        "power_zero_base",
+    ]
+)
+def test_power(a: Number, b: Number, expected: Number) -> None:
+    """
+    Test the 'power' function with various combinations of integers and floats.
+
+    This parameterized test verifies that the 'power' function correctly performs exponentiation.
+    """
+    result = power(a, b)
+    assert result == expected, f"Expected power({a}, {b}) to be {expected}, but got {result}"
 
 # ---------------------------------------------
 # Unit Tests for the 'divide' Function
